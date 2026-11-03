@@ -1,0 +1,34 @@
+# dsh-comic — DSH bundle patch.
+# 一条 host 行即装：宿主半在 lib/index.js（环境自检 + 下载 + 转 PDF + 校验），无客户端半。
+# 行 id 必须与 lib/index.js 导出的 cordis name 一致（dsh-comic）。
+- insert:
+    - id: dsh-comic
+      name: dsh-comic
+      config:
+        # Python 全路径；空 = 自动探测（常见安装位置 → PATH → DSH 自带运行时兜底），
+        # 并且在能跑的那些里**优先挑已经装了 jmcomic 的**。
+        # ⚠ 不要填相对的 "python"——Windows 上 PATH 里的 python 常常是 WindowsApps 的
+        #   空壳别名（点开跳商店），探测顺序里它排最后正是这个原因。
+        pythonPath: ''
+        # 下载目录；空 = 用户 Downloads 下的「漫画」。
+        outDir: ''
+        # 下载完顺手转 PDF。
+        pdf: true
+        # 成品形态（界面「设置 → 下载成品」里选的那个，界面优先于这里）：
+        #   pdf    = 拼成 A4 PDF、原图删掉，目录里只留一个 PDF
+        #   images = 不拼 PDF，图片按作品名进同名文件夹
+        #   both   = PDF 与同名图片文件夹并排
+        saveMode: pdf
+        # 0.2.x 的老开关，现在只当 saveMode 缺省时的兜底（true → both）。
+        keepImages: false
+        # 下载代理，例如 'http://127.0.0.1:7890'；空 = 直连。
+        proxy: ''
+        # 装 jmcomic 用的 pip 镜像；空 = pip 默认源（国内通常慢到超时）。
+        pythonMirror: 'https://pypi.tuna.tsinghua.edu.cn/simple'
+        # jmcomic 并发：image = 图片线程，photo = 话/章节线程。别调太高，站点会限流。
+        imageThreads: 8
+        photoThreads: 4
+        # 单次下载超时（毫秒）。
+        timeoutMs: 600000
+        # 安装 jmcomic 的超时（毫秒）——首次装要把 Pillow / curl_cffi 一起拉下来。
+        installTimeoutMs: 900000

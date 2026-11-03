@@ -1,0 +1,14 @@
+# 依赖（插件是 link 进 profile 的，这里只有指向宿主包的 junction）
+node_modules/
+pnpm-lock.yaml
+
+# 一次性验证脚本（每次现写现删，不进版本库）
+.verify-*.mjs
+.e2e.mjs
+.probe-*.mjs
+.resolve-probe.mjs
+
+# 运行时产物
+*.log
+.DS_Store
+Thumbs.db
